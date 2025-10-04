@@ -1,1 +1,1 @@
-# Church-management-system
+ChurchApp
