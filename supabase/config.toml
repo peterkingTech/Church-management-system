@@ -1,0 +1,132 @@
+# Supabase Configuration for Church Management System
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[auth]
+enabled = true
+port = 54324
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["https://yourdomain.com"]
+jwt_expiry = 3600
+refresh_token_rotation_enabled = true
+security_update_password_require_reauthentication = true
+
+# Email configuration
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+secure_password_change = true
+
+# External OAuth providers
+[auth.external.google]
+enabled = true
+client_id = "your_google_client_id"
+secret = "your_google_client_secret"
+redirect_uri = "http://localhost:54324/auth/v1/callback"
+
+[auth.external.github]
+enabled = true
+client_id = "your_github_client_id"
+secret = "your_github_client_secret"
+redirect_uri = "http://localhost:54324/auth/v1/callback"
+
+# Rate limiting
+[auth.rate_limit]
+email_sent = 60
+sms_sent = 60
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+# Connection pooling
+[db.pooler]
+enabled = true
+port = 54329
+pool_mode = "transaction"
+default_pool_size = 20
+max_client_conn = 100
+
+[realtime]
+enabled = true
+port = 54323
+ip_version = "ipv4"
+
+# Realtime rate limiting
+[realtime.rate_limit]
+max_events_per_second = 100
+
+[storage]
+enabled = true
+port = 54325
+file_size_limit = "50MiB"
+image_transformation = { enabled = true }
+
+# Storage buckets configuration
+[storage.buckets.avatars]
+public = true
+file_size_limit = "5MiB"
+allowed_mime_types = ["image/jpeg", "image/png", "image/gif", "image/webp"]
+
+[storage.buckets.church-files]
+public = false
+file_size_limit = "50MiB"
+allowed_mime_types = [
+  "image/*",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+]
+
+[storage.buckets.event-images]
+public = true
+file_size_limit = "10MiB"
+allowed_mime_types = ["image/jpeg", "image/png", "image/gif", "image/webp"]
+
+[storage.buckets.receipts]
+public = false
+file_size_limit = "5MiB"
+allowed_mime_types = ["image/*", "application/pdf"]
+
+[edge_functions]
+enabled = true
+port = 54326
+
+# Environment variables for edge functions
+[edge_functions.env]
+SUPABASE_URL = "http://localhost:54321"
+SUPABASE_SERVICE_ROLE_KEY = "your_service_role_key"
+
+[analytics]
+enabled = true
+port = 54327
+vector_port = 54328
+backend = "postgres"
+
+# Logging configuration
+[logging]
+level = "info"
+
+# Studio configuration
+[studio]
+enabled = true
+port = 54323
+api_url = "http://localhost:54321"
+
+# Experimental features
+[experimental]
+webhooks = true
+orioledb_version = ""
+s3_host = "localhost"
+s3_port = 54329
+s3_protocol = "http"
+s3_path_style = true
